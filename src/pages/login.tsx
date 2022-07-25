@@ -1,9 +1,30 @@
 import Link from 'next/link';
 import type { NextPage } from 'next';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Input from '../components/input';
+import { passwordRegex, userIdRegex } from '../utilities/regex';
 
 const LoginPage: NextPage = () => {
+  const [userId, setUserId] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [errorUserId, setErrorUserId] = useState<string>('');
+  const [errorPassword, setErrorPassword] = useState<string>('');
+
+  const onBlurUserId = useCallback(() => {
+    if (userId) {
+      setErrorUserId(!userId.match(userIdRegex) ? '올바른 아이디 형식으로 입력해주세요.' : '');
+    }
+  }, [userId]);
+
+  const onBlurPassword = useCallback(() => {
+    if (password) {
+      setErrorPassword(
+        !password.match(passwordRegex) ? '올바른 비밀번호 형식으로 입력해주세요.' : ''
+      );
+    }
+  }, [password]);
+
   return (
     <>
       <Header>
@@ -15,11 +36,24 @@ const LoginPage: NextPage = () => {
         </Link>
       </Header>
       <Form>
-        <div>아이디</div>
-        <TextInput type='text' />
-        <div>비밀번호</div>
-        <TextInput type='password' />
-        <LoginButton disabled>로그인</LoginButton>
+        <Input
+          title='아이디'
+          value={userId}
+          onChange={setUserId}
+          errorInfo={errorUserId}
+          onBlur={onBlurUserId}
+        />
+        <Input
+          type='password'
+          title='비밀번호'
+          value={password}
+          onChange={setPassword}
+          errorInfo={errorPassword}
+          onBlur={onBlurPassword}
+        />
+        <LoginButton disabled={!userId || !password || !!errorUserId || !!errorPassword}>
+          로그인
+        </LoginButton>
       </Form>
     </>
   );
@@ -43,10 +77,6 @@ const Form = styled.div`
   flex-direction: column;
   margin-top: 40px;
   padding: 0 20px 40px;
-`;
-
-const TextInput = styled.input`
-  border: 1px solid #000;
 `;
 
 const LoginButton = styled.button`
