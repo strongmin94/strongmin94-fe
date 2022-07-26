@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import { Product } from '../types/product';
 import ProductItem from './ProductItem';
 
@@ -17,7 +16,7 @@ const ProductList = ({ products }: ProductListProps) => (
 
 export default ProductList;
 
-const Container = styled.div`
+const Container = styled.ul`
   display: flex;
   flex-wrap: wrap;
   width: 400px;

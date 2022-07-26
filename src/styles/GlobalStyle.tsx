@@ -36,6 +36,7 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 0;
     background: none;
     user-select: none;
+    cursor: pointer;
   }
 
   ul, ol {
@@ -44,10 +45,15 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
+    cursor: pointer;
   }
 
   input, img, fieldset, iframe {
     border: 0;
+  }
+
+  input[type='submit'] {
+    cursor: pointer;
   }
 
   address, em, i {

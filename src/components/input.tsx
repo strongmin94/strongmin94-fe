@@ -3,23 +3,27 @@ import styled from 'styled-components';
 
 interface IProps {
   type?: HTMLInputTypeAttribute;
-  title: string;
+  label: string;
+  id: string;
   value: string;
-  onChange: Dispatch<SetStateAction<string>>;
+  onChange: Dispatch<SetStateAction<string>>
+  onBlur: () => void;
   errorInfo?: string;
-  onBlur?: () => void;
+  required?: boolean;
 }
 
-const Input = ({ type = 'text', title, value, onChange, errorInfo, onBlur }: IProps) => {
+const Input = ({ type = 'text', label, id, value, onChange, onBlur, errorInfo, required }: IProps) => {
   return (
     <Container>
-      <InputTitle>{title}</InputTitle>
+      <InputTitle htmlFor={id}>{label}</InputTitle>
       <TextInput
+        id={id}
         type={type}
         value={value}
         onChange={({ target: { value } }) => onChange(value)}
-        isError={!!errorInfo}
         onBlur={onBlur}
+        isError={!!errorInfo}
+        required={required}
       />
       <ErrorInfo isVisible={!!errorInfo}>{errorInfo}</ErrorInfo>
     </Container>
@@ -29,10 +33,9 @@ const Input = ({ type = 'text', title, value, onChange, errorInfo, onBlur }: IPr
 export default Input;
 
 const Container = styled.div`
-  margin-bottom: 16px;
 `;
 
-const InputTitle = styled.p`
+const InputTitle = styled.label`
   font-size: 13px;
   font-weight: 700;
   color: #6c6c7d;
