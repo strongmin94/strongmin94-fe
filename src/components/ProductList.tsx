@@ -1,18 +1,31 @@
+import { useRef } from 'react';
 import styled from 'styled-components';
 import { Product } from '../types/product';
 import ProductItem from './ProductItem';
+import ProductLoadingItem from './productLoadingItem';
 
-type ProductListProps = {
-  products: Product[];
+interface IProps {
+  isLoading: boolean;
+  products: Array<Product>;
 };
 
-const ProductList = ({ products }: ProductListProps) => (
-  <Container>
-    {products.map((product) => (
-      <ProductItem key={product.id} product={product} />
-    ))}
-  </Container>
-);
+const ProductList = ({ isLoading, products }: IProps) => {
+  const loadingData = useRef<Array<object>>(new Array(10).fill({})).current;
+
+  return (
+    <Container>
+      {
+        isLoading
+          ? loadingData.map((_, idx) => (
+            <ProductLoadingItem key={`loading_item${idx}`} />
+          ))
+          : products.map((item) => (
+            <ProductItem key={`product_${item.id}`} product={item} />
+          ))
+      }
+    </Container>
+  );
+};
 
 export default ProductList;
 

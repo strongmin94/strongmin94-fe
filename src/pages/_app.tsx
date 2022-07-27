@@ -34,8 +34,10 @@ const Background = styled.div`
 `;
 
 const Content = styled.div`
+  display: flex;
   width: 420px;
   min-height: 100%;
+  flex-direction: column;
   margin: 0 auto;
   background-color: #fff;
 `;

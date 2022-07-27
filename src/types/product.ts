@@ -4,3 +4,10 @@ export type Product = {
   thumbnail: string | null;
   price: number;
 }
+
+export interface IProductResponse {
+  data: {
+    products: Array<Product>;
+    totalCount: number;
+  }
+}

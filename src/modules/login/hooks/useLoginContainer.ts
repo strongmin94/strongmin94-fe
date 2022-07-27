@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { requestUserInfo } from "../../../redux/userInfoSlice";
 import { passwordRegex, userIdRegex } from "../../../utilities/regex";
 
-const useLogin = () => {
+const useLoginContainer = () => {
   const router = useRouter();
   const { isLoading } = useAppSelector(state => state.userInfo);
   const dispatch = useAppDispatch();
@@ -56,4 +56,4 @@ const useLogin = () => {
   }
 }
 
-export default useLogin;
+export default useLoginContainer;
