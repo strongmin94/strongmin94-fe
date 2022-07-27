@@ -1,5 +1,8 @@
-import { useCallback, useRef, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+import useIsElementInViewport from '../hooks/useIsElementInViewport';
+import useIsMounted from '../hooks/useIsMounted';
+import useUpdateEffect from '../hooks/useUpdateEffect';
 
 interface IProps {
   src: string;
@@ -8,26 +11,23 @@ interface IProps {
 
 const LazyImage = ({ src, alt }: IProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const observerRef = useRef<IntersectionObserver>();
+  const isMounted = useIsMounted();
+  const { elementRef, isInViewport } = useIsElementInViewport();
 
-  const observer = useCallback((node: HTMLDivElement) => {
-    observerRef.current = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        const image = new Image();
-        image.onload = () => {
+  useUpdateEffect(() => {
+    if (isInViewport) {
+      const image = new Image();
+      image.onload = () => {
+        if (isMounted()) {
           setIsLoading(false);
-        };
-        image.src = src;
-      }
-    });
-
-    if (node) {
-      observerRef.current.observe(node);
+        }
+      };
+      image.src = src;
     }
-  }, []);
+  }, [isInViewport]);
 
   return (
-    <StyleContainer ref={observer}>
+    <StyleContainer ref={elementRef}>
       {isLoading ? <StyleLoading /> : <StyleImage src={src} alt={alt} />}
     </StyleContainer>
   );

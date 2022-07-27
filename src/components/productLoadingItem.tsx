@@ -9,7 +9,7 @@ const ProductLoadingItem = () => {
       <Price />
     </Container>
   );
-}
+};
 
 export default memo(ProductLoadingItem);
 

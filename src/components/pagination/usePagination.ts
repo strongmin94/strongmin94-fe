@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from 'react';
 
 interface IProps {
   totalPageCount: number;
@@ -13,7 +13,7 @@ const usePagination = ({
   visibleProductCount,
   visibleGroupCount,
   currentPage,
-  setCurrentPage
+  setCurrentPage,
 }: IProps) => {
   const currentGroup = useMemo<number>(() => {
     return Math.ceil(currentPage / visibleGroupCount);
@@ -49,6 +49,6 @@ const usePagination = ({
     onClickPrev,
     onClickNext,
   };
-}
+};
 
 export default usePagination;

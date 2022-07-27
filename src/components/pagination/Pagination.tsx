@@ -20,13 +20,7 @@ const Pagination = ({
   currentPage,
   setCurrentPage,
 }: IProps) => {
-  const {
-    currentGroup,
-    maxGroupCount,
-    dots,
-    onClickPrev,
-    onClickNext
-  } = usePagination({
+  const { currentGroup, maxGroupCount, dots, onClickPrev, onClickNext } = usePagination({
     totalPageCount,
     visibleProductCount,
     visibleGroupCount,
@@ -36,34 +30,30 @@ const Pagination = ({
 
   return (
     <Container>
-      {
-        dots.length > 0 && (
-          <>
-            <Button disabled={isLoading || currentGroup === 1} onClick={onClickPrev}>
-              <VscChevronLeft />
-            </Button>
-            <PageWrapper>
-              {
-                dots
-                  .slice((currentGroup - 1) * visibleGroupCount, currentGroup * visibleGroupCount)
-                  .map((item) => (
-                    <Page
-                      key={`dots_${item}`}
-                      selected={item === currentPage}
-                      disabled={isLoading || item === currentPage}
-                      onClick={() => setCurrentPage(item)}
-                    >
-                      {item}
-                    </Page>
-                  ))
-              }
-            </PageWrapper>
-            <Button disabled={isLoading || currentGroup === maxGroupCount} onClick={onClickNext}>
-              <VscChevronRight />
-            </Button>
-          </>
-        )
-      }
+      {dots.length > 0 && (
+        <>
+          <Button disabled={isLoading || currentGroup === 1} onClick={onClickPrev}>
+            <VscChevronLeft />
+          </Button>
+          <PageWrapper>
+            {dots
+              .slice((currentGroup - 1) * visibleGroupCount, currentGroup * visibleGroupCount)
+              .map((item) => (
+                <Page
+                  key={`dots_${item}`}
+                  selected={item === currentPage}
+                  disabled={isLoading || item === currentPage}
+                  onClick={() => setCurrentPage(item)}
+                >
+                  {item}
+                </Page>
+              ))}
+          </PageWrapper>
+          <Button disabled={isLoading || currentGroup === maxGroupCount} onClick={onClickNext}>
+            <VscChevronRight />
+          </Button>
+        </>
+      )}
     </Container>
   );
 };

@@ -1,23 +1,15 @@
 import type { NextPage } from 'next';
 import styled from 'styled-components';
 import Header from '../layouts/header';
+import InfiniteScrollContainer from '../modules/infiniteScroll/container/infiniteScrollContainer';
 
 const InfiniteScrollPage: NextPage = () => {
   return (
     <>
       <Header />
-      <Container>
-        {/* <ProductList isLoading={false} products={products} /> */}
-      </Container>
+      <InfiniteScrollContainer />
     </>
   );
 };
 
 export default InfiniteScrollPage;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 20px 40px;
-`;

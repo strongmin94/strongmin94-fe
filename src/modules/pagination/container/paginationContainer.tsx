@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import Pagination from "../../../components/pagination/Pagination";
-import ProductList from "../../../components/ProductList";
-import { convertErrorCode } from "../data/convertErrorCode";
-import usePaginationContainer from "../hooks/usePaginationContainer";
+import styled from 'styled-components';
+import Pagination from '../../../components/pagination/Pagination';
+import ProductList from '../../../components/ProductList';
+import { convertErrorCode } from '../data/convertErrorCode';
+import usePaginationContainer from '../hooks/usePaginationContainer';
 
 const PaginationContainer = () => {
   const {
@@ -17,32 +17,26 @@ const PaginationContainer = () => {
 
   return (
     <Container>
-      {
-        error
-          ? <ErrorInfo>
-            {convertErrorCode(error)}
-          </ErrorInfo>
-          : (
-            <>
-              <ProductList isLoading={isLoading} products={products} />
-              {
-                currentPage && (
-                  <Pagination
-                    isLoading={isLoading}
-                    totalPageCount={totalPageCount}
-                    visibleProductCount={visibleProductCount}
-                    visibleGroupCount={5}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                  />
-                ) 
-              }
-            </>
-          )
-    }
+      {error ? (
+        <ErrorInfo>{convertErrorCode(error)}</ErrorInfo>
+      ) : (
+        <>
+          <ProductList isLoading={isLoading} products={products} />
+          {currentPage && (
+            <Pagination
+              isLoading={isLoading}
+              totalPageCount={totalPageCount}
+              visibleProductCount={visibleProductCount}
+              visibleGroupCount={5}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          )}
+        </>
+      )}
     </Container>
-  )
-}
+  );
+};
 
 export default PaginationContainer;
 
@@ -56,4 +50,4 @@ const Container = styled.main`
 
 const ErrorInfo = styled.p`
   margin: auto;
-`
+`;

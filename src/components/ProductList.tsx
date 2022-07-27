@@ -7,22 +7,16 @@ import ProductLoadingItem from './productLoadingItem';
 interface IProps {
   isLoading: boolean;
   products: Array<Product>;
-};
+}
 
 const ProductList = ({ isLoading, products }: IProps) => {
   const loadingData = useRef<Array<object>>(new Array(10).fill({})).current;
 
   return (
     <Container>
-      {
-        isLoading
-          ? loadingData.map((_, idx) => (
-            <ProductLoadingItem key={`loading_item${idx}`} />
-          ))
-          : products.map((item) => (
-            <ProductItem key={`product_${item.id}`} product={item} />
-          ))
-      }
+      {isLoading
+        ? loadingData.map((_, idx) => <ProductLoadingItem key={`loading_item${idx}`} />)
+        : products.map((item) => <ProductItem key={`product_${item.id}`} product={item} />)}
     </Container>
   );
 };
