@@ -4,14 +4,14 @@ import ProductList from '../../../components/ProductList';
 import useInfiniteScrollContainer from '../hooks/useInfiniteScrollContainer';
 
 const InfiniteScrollContainer = () => {
-  const { isLoading, products, fetchData } = useInfiniteScrollContainer();
+  const { isLoading, products, isHasMore, fetchData } = useInfiniteScrollContainer();
 
   return (
     <Container>
       {isLoading ? (
         <ProductList isLoading={isLoading} products={products} />
       ) : (
-        <InfiniteScroll onFetch={fetchData}>
+        <InfiniteScroll isHasMore={isHasMore} onFetch={fetchData}>
           <ProductList isLoading={isLoading} products={products} />
         </InfiniteScroll>
       )}

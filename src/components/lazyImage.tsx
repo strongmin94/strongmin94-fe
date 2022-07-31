@@ -12,7 +12,7 @@ interface IProps {
 const LazyImage = ({ src, alt }: IProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const isMounted = useIsMounted();
-  const { elementRef, isInViewport } = useIsElementInViewport();
+  const { elementRef, isInViewport, unobserve } = useIsElementInViewport();
 
   useUpdateEffect(() => {
     if (isInViewport) {
@@ -23,6 +23,7 @@ const LazyImage = ({ src, alt }: IProps) => {
         }
       };
       image.src = src;
+      unobserve();
     }
   }, [isInViewport]);
 

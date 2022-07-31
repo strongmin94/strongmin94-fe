@@ -1,11 +1,14 @@
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { getProducts } from "../../../api/products";
-import { Product } from "../../../types/product";
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { getProducts } from '../../../api/product';
+import { Product } from '../../../types/product';
 
 const usePaginationContainer = () => {
   const router = useRouter();
-  const { query: { page }, isReady } = router;
+  const {
+    query: { page },
+    isReady,
+  } = router;
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [products, setProducts] = useState<Array<Product>>([]);
   const [totalPageCount, setTotalPageCount] = useState<number>(0);
@@ -13,7 +16,7 @@ const usePaginationContainer = () => {
   const visibleProductCount = useRef<number>(10).current;
   const currentPage = useMemo<number | undefined>(() => {
     if (isReady) {
-      if (typeof page === "string") {
+      if (typeof page === 'string') {
         const pageNumber = parseInt(page);
         if (!isNaN(pageNumber)) {
           return pageNumber;
@@ -30,7 +33,9 @@ const usePaginationContainer = () => {
         try {
           setError('');
           setIsLoading(true);
-          const { data: { products, totalCount } } = await getProducts({ page: currentPage, size: visibleProductCount });
+          const {
+            data: { products, totalCount },
+          } = await getProducts({ page: currentPage, size: visibleProductCount });
           setProducts(products);
           setTotalPageCount(totalCount);
         } catch (ex: any) {
@@ -40,7 +45,7 @@ const usePaginationContainer = () => {
           setIsLoading(false);
         }
       }
-    }
+    };
 
     fetchData();
   }, [currentPage]);
@@ -48,7 +53,7 @@ const usePaginationContainer = () => {
   const setCurrentPage = useCallback((pageNumber: number) => {
     router.replace({
       pathname: router.pathname,
-      query: { ...router.query, page: pageNumber }
+      query: { ...router.query, page: pageNumber },
     });
   }, []);
 
@@ -60,7 +65,7 @@ const usePaginationContainer = () => {
     visibleProductCount,
     currentPage,
     setCurrentPage,
-  }  
+  };
 };
 
 export default usePaginationContainer;

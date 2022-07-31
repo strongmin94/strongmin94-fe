@@ -17,7 +17,7 @@ const ProductItem = ({ product: { id, name, thumbnail, price } }: ProductItemPro
           <LazyImage src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'} alt={name} />
         </Thumbnail>
         <Name>{name}</Name>
-        <Price>{price.toLocaleString()}</Price>
+        <Price>{price.toLocaleString()}원</Price>
       </a>
     </Link>
   </Container>
