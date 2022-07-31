@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import { store, persistor } from '../redux/store';
-import { PersistGate } from "redux-persist/integration/react";
+import { PersistGate } from 'redux-persist/integration/react';
 import styled from 'styled-components';
 
 import setupMSW from '../api/setup';

@@ -6,14 +6,14 @@ const useScrollTop = () => {
 
   const handleScroll = useDebounce({
     callback: () => {
-      setScrollTop(0);
+      setScrollTop(document.documentElement.scrollTop);
     },
     interval: 100,
   });
 
   useEffect(() => {
-    document.addEventListener('scroll', handleScroll);
-    return () => document.removeEventListener('scroll', handleScroll);
+    addEventListener('scroll', handleScroll);
+    return () => removeEventListener('scroll', handleScroll);
   }, []);
 
   return {

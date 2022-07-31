@@ -1,12 +1,13 @@
-import { useRouter } from "next/router";
-import { FormEvent, useCallback, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../redux/store";
-import { requestUserInfo } from "../../../redux/userInfoSlice";
-import { passwordRegex, userIdRegex } from "../../../utilities/regex";
+import { useRouter } from 'next/router';
+import { FormEvent, useCallback, useState } from 'react';
+import useUpdateEffect from '../../../hooks/useUpdateEffect';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { requestUserInfo } from '../../../redux/userInfoSlice';
+import { passwordRegex, userIdRegex } from '../../../utilities/regex';
 
 const useLoginContainer = () => {
   const router = useRouter();
-  const { isLoading } = useAppSelector(state => state.userInfo);
+  const { isLoading } = useAppSelector((state) => state.userInfo);
   const dispatch = useAppDispatch();
   const [userId, setUserId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -14,7 +15,7 @@ const useLoginContainer = () => {
   const [errorPassword, setErrorPassword] = useState<string>('');
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     setIsDisabled(!userId.match(userIdRegex) || !password.match(passwordRegex));
   }, [userId, password]);
 
@@ -26,20 +27,25 @@ const useLoginContainer = () => {
 
   const onBlurPassword = useCallback(() => {
     if (password) {
-      setErrorPassword(!password.match(passwordRegex) ? '올바른 비밀번호 형식으로 입력해주세요.' : '');
+      setErrorPassword(
+        !password.match(passwordRegex) ? '올바른 비밀번호 형식으로 입력해주세요.' : ''
+      );
     }
   }, [password]);
 
-  const onSubmit = useCallback(async (event: FormEvent) => {
-    event.preventDefault();
-    try {
-      await dispatch(requestUserInfo({ userId, password })).unwrap();
-      router.push('/');
-    } catch (ex: any) {
-      console.log(ex);
-      alert(ex?.code);
-    }
-  }, [userId, password]);
+  const onSubmit = useCallback(
+    async (event: FormEvent) => {
+      event.preventDefault();
+      try {
+        await dispatch(requestUserInfo({ userId, password })).unwrap();
+        router.push('/');
+      } catch (ex: any) {
+        console.log(ex);
+        alert(ex?.code);
+      }
+    },
+    [userId, password]
+  );
 
   return {
     isLoading,
@@ -53,7 +59,7 @@ const useLoginContainer = () => {
     onBlurUserId,
     onBlurPassword,
     onSubmit,
-  }
-}
+  };
+};
 
 export default useLoginContainer;
