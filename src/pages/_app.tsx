@@ -1,4 +1,7 @@
 import type { AppProps } from 'next/app';
+import { Provider } from 'react-redux';
+import { store, persistor } from '../redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 import styled from 'styled-components';
 
 import setupMSW from '../api/setup';
@@ -8,13 +11,15 @@ setupMSW();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <GlobalStyle />
-      <Background />
-      <Content>
-        <Component {...pageProps} />
-      </Content>
-    </>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <GlobalStyle />
+        <Background />
+        <Content>
+          <Component {...pageProps} />
+        </Content>
+      </PersistGate>
+    </Provider>
   );
 }
 
@@ -29,8 +34,10 @@ const Background = styled.div`
 `;
 
 const Content = styled.div`
+  display: flex;
   width: 420px;
   min-height: 100%;
+  flex-direction: column;
   margin: 0 auto;
   background-color: #fff;
 `;
